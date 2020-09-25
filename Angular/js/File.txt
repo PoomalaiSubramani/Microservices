@@ -1,0 +1,262 @@
+What is javascripts?
+  JavaScript(Often shortened to JS) 
+  Lightweight - Small memory footprint, easy to implement
+  interpreted - No compilation. instructions executed directly.
+  object oriented - 
+  first class function
+  scripting language
+  
+  variable declartion:
+      var value=20;
+	  var strValue="Hello";
+	  var booleanValue=true;
+	  value="Hello world programs";
+	  -- there is no spacific type in js.
+Primity type:
+    Number
+	String
+	Boolean
+	undefined
+	null
+	
+Types and Variables:
+  No need to declare variable type.
+  The same variable can be assigned values of different types.
+  No scope information in variable declartion.
+  variables and values can be interrogated.
+Typeof operator:
+    its going to return variable type like string, number, boolean etc..
+=== operator:
+    This operator is used for compare value in if condition like == opeartor in other language.
+	== operator also we can use for compare values in if condition but if values are two diff type convert any value type to other type then its compare 
+	the values(if(10=='45') result is true)
+	
+Type Coericion:
+     if condition concider as true if condition of value is non zero else its false.
+	 if condition concider as true if condition of value is any string, if condition of value is empty string it concider as false.
+	 if condition concider as true if condition of variable is undefined.
+	 if condition concider as true if condition of value is null.
+Object:
+    var objValue={prom1:"Welcome",prom2:"To"};
+    console.log("Access Object Value:"+objValue.prom1);
+
+	var objValue={};
+	objValue.prom1="Welcome";
+	objValue.prom2="To";
+	console.log("Access Object Value:"+objValue.prom1);
+	console.log("Access Object to another way:"+objValue[prom1]);
+	Dot and bracket notation:
+		We can use all places bracket notation.
+		we can not use dot notation in illegal property name like below , we can use bracket notation			
+			var objValue={"prop1":"Welcome",
+					  "1":"To Js programs"
+					  };
+			console.log(objValue.1);
+			result: getting error
+			console.log(objValue[1]);
+		we can use below code bracket notation only,
+			var objValue={"prop1":"Welcome",
+					  "1":"To Js programs"
+					  };
+			var propertyValue="prop1";
+			console.log(objValue[propertyValue]);
+		 
+Nested Objects:
+ex-1:
+	var objValue={"prop1":"Welcome",
+					  "1":"To Js programs",
+					  "anotherObj":{
+					     "innerprop":"nested prop Value"
+					  }					  
+					  };
+ex-2:					  
+	var objValue={"prop1":"Welcome",
+					  "1":"To Js programs"					  				  
+					  };
+		objValue.anotherObj.innerprop="nested prop Value";
+	 console.log("Access obj use dot notation="+objValue.anotherObj.innerprop);
+	 OR
+	 console.log("Access obj use bracket notation="+objValue.anotherObj[innerprop]); //We can use bracket notation both object and property also.
+=== operator in object:
+	var objVal={
+		"prop":"Welcome"
+	};
+    var objVal2;
+	objVal2=objVal;	
+	if(objVal2===objVal)
+		console.log("Both reference variable refer to the same object");// two reference variable refer to same memory location object.
+	
+	 
+delete property:
+
+	var objVal={
+		"FirstName":"Poomalai",
+		"LastName":"Mani",
+		"Age":34
+		};
+		 
+		To disable age while access object,
+		objVal.age=undefined;
+      	console.log(objVal);
+		 Result:
+			  {
+				"FirstName":"Poomalai",
+				"LastName":"Mani",
+				"Age": undefined
+				};
+		To disable age using delete property while access object,	
+				var objVal={
+					"FirstName":"Poomalai",
+					"LastName":"Mani",
+					"Age":34
+					};
+		delete objVal.age;
+			console.log(objVal);
+			  Result:
+			  {
+				"FirstName":"Poomalai",
+				"LastName":"Mani"
+				};
+			
+			
+		 	  
+
+			
+undefined:
+    var values;
+	console.log("Undefine Value="+values);
+	result:Undefine Value=undefined;
+	
+	var objValue={"prop1":"Welcome",
+	              "prom2":"To Js programs"
+				  };
+    console.log("Access undeclar Variable="+objValue.prom3);
+	Result: Access undeclar Variable=undefined;
+	
+	
+Array:
+ Array is same as object, array going to access based index and object is going to access based on property.
+ Array using [] and object using {} to intialise value, 
+ var arrayValue=[34,56,80];
+ Array is same as other language to initialise and access, in js array size is increase dymanically.
+ 
+Function:
+	Ex:-:
+		function display(tech){
+			console.log("Welcome to "+tech);
+		}
+		
+		display("JS");
+    Ex:2
+		function display(tech,timeOfDay){
+			console.log("Welcome to "+tech+" "+timeOfDay);
+		}
+		
+		for this ->display("JS","Evening");
+		Result:
+			Welcome to JS Evening
+			
+		for this ->display("JS");
+		Result:
+			Welcome to JS undefined
+			
+		for this ->display("JS","Evening",42);
+		Result:
+			Welcome to JS Evening
+	Note:
+		Js is concider only function name not list of parameter, there is no method overloading or method overriding in js.
+	Ex:3
+	
+		function display(tech,timeOfDay){
+			return "Welcome to "+tech+" "+timeOfDay;
+		}
+		
+		var returnVal=display("JS","Evening");
+		console.log(returnVal);
+		
+		
+	Ex:4 
+		function display(tech,timeOfDay){
+			return ;
+		}
+		
+		var returnVal=display("JS","Evening");
+		console.log(returnVal);
+		
+	Note:
+		There is no return is required in function declartion.
+Function Expression:
+		var fnExpression=function display(){
+			console.log("Welcome to JS");
+		};
+		
+		fnExpression();
+		
+Anonymous Function:
+        var fnExpression=function (){
+			console.log("Welcome to JS");
+		};
+		
+		fnExpression();
+		This is same as function expression but there is no function name. 
+     
+Function as Argument:
+	
+		var f=function display(tech,timeOfDay){
+			return "Welcome to "+tech+" "+timeOfDay;
+		}
+		
+		var executedfn= function (fn,tech,timeOfDay){
+			fn(tech,timeOfDay);
+		};
+		
+		executedfn(f,"JS","Evening");
+		
+		
+Function on object:
+	ex:1
+       var objVal={
+	   "prop":"Welcome"
+	   };
+	   objVal.executFn=function (){
+		console.log("Welcome to js");
+	   };
+	   
+	   objVal.executFn();
+	Ex:2
+	  var objVal={
+	   "FirstName":"Poomalai",
+	   "LastName":"Mani"
+	   "executFn": function (){
+		return this.FirstName+ " "+this.LastName;
+	   }	   
+	   };
+var userName=objVal.executeFn();
+console.log(userName);
+
+Example of function and object:	   
+var person={
+	"FirstName":"Poomalai",
+	"LastName":"Mani",
+	"getFullName":function (){
+		return this.FirstName+" "+this.LastName;
+	},
+	"addressObj":{
+	"street":"13",
+	"city":"js",
+	"state":"CA"
+	},
+	isFromState=function (state){
+	      if(this.addressObj.state===state){
+			return true;
+		  }else{
+		  return false;
+		  }
+	}
+}; 	  
+var checkState=person.isFromState("CA");
+console.log("Is this both state are equals "+checkState);
+
+Function JS:
+   alert();
+    document.write(myVar);

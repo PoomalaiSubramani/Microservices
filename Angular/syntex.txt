@@ -1,0 +1,21 @@
+Component:
+
+import {Component} from '@angular/core';
+
+
+@Component({sector:'name-of-componet',
+			templateUrl:'./..-componet.html',
+			sytelUrls:'./..-componet.csss'}
+)
+export class Name-of-class{
+}
+
+Module:
+  
+  @NgModule({
+  declartions:[List of component],
+  imports:[List of modules],
+  providers:[List of service],
+  bootstrap:[Root Component}]})
+  export class Name-of-Module{
+  }
