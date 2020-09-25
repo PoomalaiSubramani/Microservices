@@ -1,0 +1,203 @@
+Coverred:
+	@RestController
+	@RequestMapping('/uri')
+	@RequestMapping("/{userId}")
+	@PathVariable('userId')
+	@SpringBootApplication
+	spring.application.name=movie-catalog-service -> To set Application Name in application.properties.
+	server.port=8081 -> To set port number in application.properties.
+	
+	To Make communication from one server to another service using below code,
+	RestTemplate restTemplate =new RestTemplate();
+	Movie objMovie=restTemplate.getForObject('url',Movie.class);
+	Note:
+		For marshalling and UnMarshalling should be empty constractor in Movie class.
+	
+	Another way of making rest call,
+			WebClient.Builder refBuilder=WebClient.builder();
+		refBuilder.get()
+		.uri('')
+		.retrieve()
+		.bodyToMono(name.class)
+		.block();
+		
+	Note:
+		for WebClient we need to add dependencies'Spring Reactive Web' while creating spring boot application.
+		
+	https://start.spring.io/ - to create spring boot project using web.
+		Movie
+			movieId
+			name
+			description
+			
+	Eureka:
+		Eureka client register with eureka server. client going to communicate server using application name based app name server going to given 
+		url of api service.
+		
+		* we need to choose 'Eureka Server' dependency while create discovery service.
+		
+		@LoadBalanced --> used in RestTemplate, this annotation tell eureka server give rest api url based app service name.
+		@EnableEurekaServer - this used in server discovery.
+		@EnableEurekaClient - this used in client service.		
+		
+	properties file Eureka server:
+		server.port=8761
+		eureka.client.register-with-eureka=false
+		eureka.client.fetch-registry=false
+	
+	Required jar for eureka client:
+	<properties>
+		<java.version>1.8</java.version>
+	+	<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+	</properties>
+	
+	<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+		
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+			
+Circute bracker:
+		@EnableCircuitBreaker
+		@@HystrixCommand(fallbackMethod="",
+				commandProperties={
+								@HytrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="200"),
+								@HytrixProperty(name="circutBreaker.requestVolumeThreshold", value="5"),
+								@HytrixProperty(name="circutBreaker.errorthresholdPercentage", value="50"),
+								@HytrixProperty(name="circutBreaker.sleepWindowInMilliseconds", value="500")
+					})
+		
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+Hystrix Dashboard:
+	@EnableHystrixDashboard
+	
+	management.endpoints.web.exposure.include=hystrix.stream --> in Properties file.
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	
+Configuration:
+	my.greeting=Hello  --> properties file
+	app.name=my app
+	app.description=Welcome to ${app.name}
+	app.listValu=one,two,three
+	dbValue={connectionString:'http://--',userName='foo',password='foo'}
+	
+	To access to class 
+	@Value('${my.greeting}')
+	@Value('${my.greeting: default value}')
+	
+	@Value("${app.listValu}")
+	private List<String> list;
+	
+	@Value('#{${dbValue}}')
+	private map<String,String> dbValue
+@ConfigurationProperties('db')
+	
+	properties:	
+		db.connnection={connectionString:'http://--',userName='foo',password='foo'}
+		db.port=8090
+		db.host=local
+		
+	model class:
+		@Configuration
+		@ConfigurationProperties('db')
+		class DBDetails{
+			private String connection;
+			private int port;
+			private String host;
+			
+			...
+			...
+		}
+	main class:
+		Class AccessProperty{
+		@AutoWired
+		 private DBDetails dbDetails;
+		}
+properties file overright:
+	java -jar prop file(ConfigurationManagement-0.0.1-SNAPSHOT.jar). -> To run jar file from cmd.
+	
+	To override external prop file,
+		create app.prop file in target folder then run config jar file.
+	
+	using coomand line arument,
+		java -jar ConfigurationManagement-0.0.1-SNAPSHOT.jar --my.greeting="prop value getting from command line argument"
+		
+Yaml file:
+	instead of using = operator in properties file need to use :
+	my:
+		greeting=Hello  --> properties file
+	app:
+		name=my app
+		description=Welcome to ${app.name}
+		listValu=one,two,three
+		dbValue="{connectionString:'http://--',userName='foo',password='foo'}"
+		
+		
+spring.profiles.active:test -> To active prop file if its more then one prop file other then default file.
+
+spring cloud configuration server:
+	Tutorial start with 11
+
+	@EnableConfigServer
+	
+	properties:
+		spring.cloud.config.server.git.uri=
+	
+	dependency:
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+	Note:
+		while create spring boot app select config server dependency you get above things.
+	To Access Url is,
+		http://localhost:8888/application/default
+			Note:
+				application is prop name with extn
+				default is profile name.
+	To consume spring cloud prop in microservice,
+		
+		dependency:
+			select configClient
+			
+		
+Advantages :
+	Microservices are self-contained, independent deployment module.
+	The cost of scaling is comparatively less than the monolithic architecture.
+	Microservices are independently manageable services. It can enable more and more services as the need arises. It minimizes the impact on existing service.
+	It is possible to change or upgrade each service individually rather than upgrading in the entire application.
+	Less dependency and easy to test.
+	Faster release cycle.
+	
+Disadvantages :		
+	There is a higher chance of failure during communication between different services.
+	Difficult to manage a large number of services.
+	
+	
+	what is diff monolithic and microservice.
+	
+	
+	web spri
