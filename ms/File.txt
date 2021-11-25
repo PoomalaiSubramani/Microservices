@@ -12,6 +12,15 @@ Coverred:
 	Movie objMovie=restTemplate.getForObject('url',Movie.class);
 	Note:
 		For marshalling and UnMarshalling should be empty constractor in Movie class.
+		
+	* We can use exchange method when need to pass request with content type.
+	* We can use getForEntity() and postForEntity when required response type ResponseEntity and not care abt reqest Contect Type.
+	* We can use getForObject(url,responseType) and  posttForObject(url,responseType) when not required  ResponseEntity and  not care abt reqest Contect Type.
+	* We can use delete and put method if not required any response once executed service.
+
+	
+
+	- RestTemplateBuilder is used to create restTemplate object, set service timeout and set base url.	
 	
 	Another way of making rest call,
 			WebClient.Builder refBuilder=WebClient.builder();
